@@ -13,6 +13,7 @@ public class ConexionEmpleados_h2 {
     private static final String SELECT_SQL="SELECT * FROM EMPLEADOS;";
 
     private static final String INSERT_SQL="INSERT INTO EMPLEADOS VALUES(?,?,?,?,?,?);" ;
+    private static final String DELETE_SQL="DELETE FROM EMPLEADOS WHERE ID=? ;";
 
     public static void main(String[] args) {
         Empleado empleado1 = new Empleado(1L,"Sebastian",34,"12/6/2024",500000.0,550000.0);
@@ -35,20 +36,33 @@ public class ConexionEmpleados_h2 {
             pstmt.setString(4, empleado1.getFecha());
             pstmt.setDouble(5,empleado1.getSueldoBasico());
             pstmt.setDouble(6,empleado1.getSueldoTotal());
+
+
+            if (pstmt.executeUpdate() > 0) {
+                System.out.println("Se guardo el registro");
+            }
             pstmt.setLong(1, empleado2.getId());
             pstmt.setString(2, empleado2.getNombre());
             pstmt.setInt(3, empleado2.getEdad());
             pstmt.setString(4, empleado2.getFecha());
             pstmt.setDouble(5,empleado2.getSueldoBasico());
             pstmt.setDouble(6,empleado2.getSueldoTotal());
+            if(pstmt.executeUpdate() > 0) {
+                System.out.println("Se guardo el 2° registro");
+            }
             pstmt.setLong(1, empleado3.getId());
             pstmt.setString(2, empleado3.getNombre());
             pstmt.setInt(3, empleado3.getEdad());
             pstmt.setString(4, empleado3.getFecha());
             pstmt.setDouble(5,empleado3.getSueldoBasico());
             pstmt.setDouble(6,empleado3.getSueldoTotal());
-            if (pstmt.executeUpdate() > 0) {
-                System.out.println("Se guardo el registro");
+            if(pstmt.executeUpdate() > 0) {
+                System.out.println("Se guardo el 3° registro");
+            }
+            PreparedStatement pstm_delete=conexion.prepareStatement(DELETE_SQL);
+            pstm_delete.setLong(1,1L);
+            if(pstm_delete .executeUpdate() > 0) {
+                System.out.println("Se elimina el registro con id 1L");
             }
 
             ResultSet empleados = pstmt.executeQuery(SELECT_SQL);
