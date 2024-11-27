@@ -13,6 +13,7 @@ public class ConexionEmpleados_h2 {
     private static final String SELECT_SQL="SELECT * FROM EMPLEADOS;";
 
     private static final String INSERT_SQL="INSERT INTO EMPLEADOS VALUES(?,?,?,?,?,?);" ;
+    private static final String UPDATE_SQL="UPDATE EMPLEADOS SET EDAD=? WHERE ID=? ;";
     private static final String DELETE_SQL="DELETE FROM EMPLEADOS WHERE ID=? ;";
 
     public static void main(String[] args) {
@@ -59,6 +60,15 @@ public class ConexionEmpleados_h2 {
             if(pstmt.executeUpdate() > 0) {
                 System.out.println("Se guardo el 3° registro");
             }
+            PreparedStatement pstm_update=conexion.prepareStatement(UPDATE_SQL) ;
+            pstm_update.setInt(1,30);
+            pstm_update.setLong(2,2L);
+
+
+            if(pstm_update.executeUpdate() > 0){
+                System.out.println("Se actualizo la edad del registro con id 2L");
+            }
+
             PreparedStatement pstm_delete=conexion.prepareStatement(DELETE_SQL);
             pstm_delete.setLong(1,1L);
             if(pstm_delete .executeUpdate() > 0) {
